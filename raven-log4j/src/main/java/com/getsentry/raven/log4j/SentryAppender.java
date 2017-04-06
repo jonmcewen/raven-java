@@ -93,7 +93,7 @@ public class SentryAppender extends AppenderSkeleton {
      * Creates an instance of SentryAppender.
      */
     public SentryAppender() {
-        this.addFilter(new DropRavenFilter());
+        this(null);
     }
 
     /**
@@ -102,8 +102,12 @@ public class SentryAppender extends AppenderSkeleton {
      * @param raven instance of Raven to use with this appender.
      */
     public SentryAppender(Raven raven) {
-        this();
-        this.raven = raven;
+        this.addFilter(new DropRavenFilter());
+        if (raven == null) {
+            initRaven();
+        } else {
+            this.raven = raven;
+        }
     }
 
     /**
@@ -113,10 +117,6 @@ public class SentryAppender extends AppenderSkeleton {
      */
     @SuppressWarnings("checkstyle:hiddenfield")
     private void lazyInit() {
-        if (raven == null) {
-            initRaven();
-        }
-
         if (!initialized) {
             synchronized (this) {
                 if (!initialized) {
@@ -195,8 +195,6 @@ public class SentryAppender extends AppenderSkeleton {
     @Override
     public void activateOptions() {
         super.activateOptions();
-
-        lazyInit();
     }
 
     /**
@@ -220,6 +218,11 @@ public class SentryAppender extends AppenderSkeleton {
 
     @Override
     protected void append(LoggingEvent loggingEvent) {
+        lazyInit();
+        if (raven == null) {
+            return;
+        }
+
         // Do not log the event if the current thread is managed by raven
         if (RavenEnvironment.isManagingThread()) {
             return;
@@ -227,7 +230,6 @@ public class SentryAppender extends AppenderSkeleton {
 
         RavenEnvironment.startManagingThread();
         try {
-            lazyInit();
             Event event = buildEvent(loggingEvent);
             raven.sendEvent(event);
         } catch (Exception e) {

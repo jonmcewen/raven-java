@@ -105,7 +105,7 @@ public class SentryAppender extends AppenderBase<ILoggingEvent> {
      * Creates an instance of SentryAppender.
      */
     public SentryAppender() {
-        this.addFilter(new DropRavenFilter());
+        this(null);
     }
 
     /**
@@ -114,8 +114,12 @@ public class SentryAppender extends AppenderBase<ILoggingEvent> {
      * @param raven instance of Raven to use with this appender.
      */
     public SentryAppender(Raven raven) {
-        this();
-        this.raven = raven;
+        this.addFilter(new DropRavenFilter());
+        if (raven == null) {
+            initRaven();
+        } else {
+            this.raven = raven;
+        }
     }
 
     /**
@@ -125,10 +129,6 @@ public class SentryAppender extends AppenderBase<ILoggingEvent> {
      */
     @SuppressWarnings("checkstyle:hiddenfield")
     private void lazyInit() {
-        if (raven == null) {
-            initRaven();
-        }
-
         if (!initialized) {
             synchronized (this) {
                 if (!initialized) {
@@ -215,6 +215,11 @@ public class SentryAppender extends AppenderBase<ILoggingEvent> {
      */
     @Override
     protected void append(ILoggingEvent iLoggingEvent) {
+        lazyInit();
+        if (raven == null) {
+            return;
+        }
+
         // Do not log the event if the current thread is managed by raven
         if (RavenEnvironment.isManagingThread()) {
             return;
@@ -226,7 +231,6 @@ public class SentryAppender extends AppenderBase<ILoggingEvent> {
                 return;
             }
 
-            lazyInit();
             Event event = buildEvent(iLoggingEvent);
             raven.sendEvent(event);
         } catch (Exception e) {
