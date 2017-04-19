@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# sentry-java documentation build configuration file, created by
+# raven-java documentation build configuration file, created by
 # sphinx-quickstart on Mon Jan 21 21:04:27 2013.
 #
 # This file is execfile()d with the current directory set to its containing dir.
@@ -40,7 +40,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'sentry-java'
+project = u'raven-java'
 copyright = u'%s, Functional Software Inc.' % datetime.date.today().year
 
 # The version info for the project you're documenting, acts as replacement for
@@ -166,7 +166,7 @@ html_theme = 'default'
 #html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'sentry-javadoc'
+htmlhelp_basename = 'raven-javadoc'
 
 
 # -- Options for LaTeX output --------------------------------------------------
@@ -185,7 +185,7 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'sentry-java.tex', u'sentry-java Documentation',
+  ('index', 'raven-java.tex', u'raven-java Documentation',
    u'Functional Software Inc.', 'manual'),
 ]
 
@@ -215,7 +215,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'sentry-java', u'sentry-java Documentation',
+    ('index', 'raven-java', u'raven-java Documentation',
      [u'Functional Software Inc.'], 1)
 ]
 
@@ -229,8 +229,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'sentry-java', u'sentry-java Documentation',
-   u'Functional Software Inc.', 'sentry-java', 'One line description of project.',
+  ('index', 'raven-java', u'raven-java Documentation',
+   u'Functional Software Inc.', 'raven-java', 'One line description of project.',
    'Miscellaneous'),
 ]
 
