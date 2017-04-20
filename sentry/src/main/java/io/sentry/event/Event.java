@@ -85,10 +85,6 @@ public class Event implements Serializable {
      */
     private String release;
     /**
-     * Identifies the distribution of the application.
-     */
-    private String dist;
-    /**
      * Identifies the environment the application is running in.
      */
     private String environment;
@@ -239,14 +235,6 @@ public class Event implements Serializable {
 
     void setRelease(String release) {
         this.release = release;
-    }
-
-    public String getDist() {
-        return dist;
-    }
-
-    public void setDist(String dist) {
-        this.dist = dist;
     }
 
     public String getEnvironment() {
